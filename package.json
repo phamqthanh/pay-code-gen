@@ -1,0 +1,46 @@
+{
+  "name": "@pahm/pay-code-gen",
+  "version": "0.0.1",
+  "description": "A package to generate pay codes for fast money transfer (excluding QR code generation).",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest --watch=false",
+    "coverage": "vitest run --coverage",
+    "build": "tsup-node --env.NODE_ENV production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phamqthanh/pay-code-gen.git"
+  },
+  "keywords": [
+    "payment",
+    "money-transfer",
+    "pay-code",
+    "quick-payment",
+    "transfer-code",
+    "bank-transfer",
+    "generate qrcode",
+    "napas"
+  ],
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": true,
+    "provenance": true,
+    "access": "restricted",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.mts",
+        "require": "./dist/index.js",
+        "import": "./dist/index.mjs"
+      }
+    }
+  },
+  "author": "Thanh Pham",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitest/coverage-v8": "2.1.5",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.5"
+  }
+}
