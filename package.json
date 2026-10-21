@@ -1,46 +1,107 @@
 {
-  "name": "@pahm/pay-code-gen",
-  "version": "0.0.1",
-  "description": "A package to generate pay codes for fast money transfer (excluding QR code generation).",
-  "main": "index.js",
+  "name": "napas-format",
+  "version": "0.1.0",
+  "description": "Build, parse and validate VietQR (NAPAS247) payment payload strings with composable functions. Payload only: no QR image rendering or bank API.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./tlv": {
+      "import": "./dist/tlv.js",
+      "require": "./dist/tlv.cjs"
+    },
+    "./crc": {
+      "import": "./dist/crc.js",
+      "require": "./dist/crc.cjs"
+    },
+    "./vietqr": {
+      "import": "./dist/vietqr.js",
+      "require": "./dist/vietqr.cjs"
+    },
+    "./vietqr/fields": {
+      "import": "./dist/vietqr/fields.js",
+      "require": "./dist/vietqr/fields.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "tlv": [
+        "./dist/tlv.d.cts"
+      ],
+      "crc": [
+        "./dist/crc.d.cts"
+      ],
+      "vietqr": [
+        "./dist/vietqr.d.cts"
+      ],
+      "vietqr/fields": [
+        "./dist/vietqr/fields.d.cts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "docs/migration.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
+    "build": "tsdown",
     "test": "vitest --watch=false",
     "coverage": "vitest run --coverage",
-    "build": "tsup-node --env.NODE_ENV production"
+    "typecheck": "tsc --noEmit",
+    "verify:package": "node scripts/verify-package.mjs",
+    "check": "pnpm typecheck && pnpm test && pnpm build && pnpm lint:package && pnpm verify:package",
+    "prepublishOnly": "pnpm check",
+    "lint:package": "publint && attw --pack .",
+    "size:compare": "pnpm build && node scripts/compare-size.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/phamqthanh/pay-code-gen.git"
+    "url": "git+https://github.com/phamqthanh/pay-code-gen.git"
   },
   "keywords": [
+    "vietqr",
+    "napas",
+    "napas247",
+    "emvco",
+    "qr-payment",
+    "tlv",
+    "crc16",
     "payment",
-    "money-transfer",
-    "pay-code",
-    "quick-payment",
-    "transfer-code",
     "bank-transfer",
-    "generate qrcode",
-    "napas"
+    "pay-code"
   ],
   "publishConfig": {
-    "directory": "dist",
-    "linkDirectory": true,
-    "provenance": true,
-    "access": "restricted",
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.mts",
-        "require": "./dist/index.js",
-        "import": "./dist/index.mjs"
-      }
-    }
+    "access": "public",
+    "provenance": true
   },
   "author": "Thanh Pham",
   "license": "MIT",
+  "packageManager": "pnpm@10.15.0",
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@types/node": "^20.19.43",
     "@vitest/coverage-v8": "2.1.5",
-    "tsup": "^8.3.5",
+    "esbuild": "^0.25.12",
+    "publint": "^0.3.25",
+    "rollup": "^4.64.12",
+    "tsdown": "~0.21.10",
     "typescript": "^5.7.2",
     "vitest": "^2.1.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
