@@ -81,8 +81,7 @@
     "pay-code"
   ],
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "author": "Thanh Pham",
   "license": "MIT",
